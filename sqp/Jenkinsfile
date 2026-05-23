@@ -58,6 +58,8 @@ pipeline {
                 //   --cov-fail-under=${COVERAGE_THRESHOLD}
                 //   --junitxml (para publicar resultados en Jenkins)
                 sh """
+                    cd sqp
+
                     python3 -m pytest tests/ \
                     -v \
                     --cov=src \
