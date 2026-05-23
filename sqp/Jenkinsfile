@@ -73,7 +73,7 @@ pipeline {
                 always {
                     // TODO 4: Publica los resultados de JUnit en Jenkins
                     // Pista: usa la instrucción junit con la ruta al XML
-                    junit "${REPORTS_DIR}/pytest-report.xml"
+                    junit "sqp/${REPORTS_DIR}/pytest-report.xml"
                 }
             }
         }
@@ -93,7 +93,7 @@ pipeline {
                         -Dsonar.projectName=${SONAR_PROJECT_NAME} \
                         -Dsonar.sources=src \
                         -Dsonar.tests=tests \
-                        -Dsonar.python.coverage.reportPaths=${REPORTS_DIR}/coverage.xml \
+                        -Dsonar.python.coverage.reportPaths=sqp/${REPORTS_DIR}/coverage.xml \
                         -Dsonar.python.version=3
                     """
                 }
