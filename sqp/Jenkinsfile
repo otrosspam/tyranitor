@@ -42,8 +42,7 @@ pipeline {
                 // Pista: usa pip3 con --no-cache-dir y el archivo requirements.txt
                 // Crea también el directorio de reportes con mkdir -p
                 sh """
-                    pip3 install --no-cache-dir -r requirements.txt
-                    mkdir -p ${REPORTS_DIR}
+                    pip3 install --break-system-packages --no-cache-dir -r requirements.txt
                 """
             }
         }
