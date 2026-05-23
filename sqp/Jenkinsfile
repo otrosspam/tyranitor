@@ -88,6 +88,8 @@ pipeline {
                 //   -Dsonar.python.version=3
                 withSonarQubeEnv("SonarQube") {
                     sh """
+                        cd sqp
+
                         sonar-scanner \
                         -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
                         -Dsonar.projectName=${SONAR_PROJECT_NAME} \
@@ -111,6 +113,7 @@ pipeline {
         stage("6 · Resumen") {
             steps {
                 sh """
+                
                     echo "Proyecto : ${APP_NAME}"
                     echo "Branch   : \$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo N/A)"
                     echo "Commit   : \$(git rev-parse --short HEAD 2>/dev/null || echo N/A)"
