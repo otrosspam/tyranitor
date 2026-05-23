@@ -82,13 +82,51 @@ class TestListarEstudiantes:
         assert len(response.json()) == 1
 
 
-# ─────────────────────────────────────────────────────────────
-#  TODO para el equipo:
-#  Agregar tests para:
-#  - test_eliminar_estudiante_existente
-#  - test_eliminar_estudiante_inexistente
-#  - test_desactivar_estudiante
-#  - test_codigo_se_convierte_a_mayusculas
-#  - test_semestre_minimo_valido (semestre=1)
-#  - test_semestre_maximo_valido (semestre=10)
-# ─────────────────────────────────────────────────────────────
+class TestEliminarEstudiante:
+
+    def test_eliminar_estudiante_existente(self):
+        client.post("/estudiantes/", json={
+            "codigo": "E001", "nombre": "Ana", "email": "a@t.com", "semestre": 1
+        })
+        response = client.delete("/estudiantes/E001")
+        assert response.status_code == 204
+        assert client.get("/estudiantes/E001").status_code == 404
+
+    def test_eliminar_estudiante_inexistente(self):
+        response = client.delete("/estudiantes/X999")
+        assert response.status_code == 404
+
+
+class TestActualizarEstudiante:
+
+    def test_desactivar_estudiante(self):
+        client.post("/estudiantes/", json={
+            "codigo": "E001", "nombre": "Ana", "email": "a@t.com", "semestre": 1
+        })
+        response = client.put("/estudiantes/E001/desactivar")
+        assert response.status_code == 200
+        assert response.json()["activo"] is False
+
+
+class TestValidacionesEstudiante:
+
+    def test_codigo_se_convierte_a_mayusculas(self):
+        response = client.post("/estudiantes/", json={
+            "codigo": "e001", "nombre": "Ana", "email": "a@t.com", "semestre": 1
+        })
+        assert response.status_code == 201
+        assert response.json()["codigo"] == "E001"
+
+    def test_semestre_minimo_valido(self):
+        response = client.post("/estudiantes/", json={
+            "codigo": "E001", "nombre": "Ana", "email": "a@t.com", "semestre": 1
+        })
+        assert response.status_code == 201
+        assert response.json()["semestre"] == 1
+
+    def test_semestre_maximo_valido(self):
+        response = client.post("/estudiantes/", json={
+            "codigo": "E001", "nombre": "Ana", "email": "a@t.com", "semestre": 10
+        })
+        assert response.status_code == 201
+        assert response.json()["semestre"] == 10

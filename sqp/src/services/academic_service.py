@@ -25,10 +25,11 @@ def calcular_promedio_estudiante(codigo: str) -> float:
     diferente filtro. Viola DRY.
     [DEUDA ALTA] División por cero si el estudiante no tiene notas.
     """
-    notas = [n for n in get_notas() if n["codigo_estudiante"] == codigo.upper()]
-    total = sum(n["valor"] for n in notas)
-    # [DEUDA] ZeroDivisionError si notas está vacío
-    return round(total / len(notas), 2)
+    notas = [n for n in get_notas()
+             if n["codigo_estudiante"] == codigo]
+    if not notas:
+        return 0.0
+    return round(sum(n["valor"] for n in notas) / len(notas), 2)
 
 
 def calcular_promedio_materia(codigo: str) -> float:
@@ -39,8 +40,9 @@ def calcular_promedio_materia(codigo: str) -> float:
     [DEUDA ALTA] División por cero si la materia no tiene notas.
     """
     notas = [n for n in get_notas() if n["codigo_materia"] == codigo.upper()]
+    if not notas:
+        return 0.0
     total = sum(n["valor"] for n in notas)
-    # [DEUDA] ZeroDivisionError si notas está vacío
     return round(total / len(notas), 2)
 
 
@@ -78,6 +80,7 @@ def reporte_academico(codigo_estudiante: str) -> dict:
         "total_notas": len(notas),
         "aprobadas": len(aprobadas),
         "reprobadas": len(reprobadas),
+        "materias_cursadas": conteo_materias,
         "promedio": promedio,
     }
 
