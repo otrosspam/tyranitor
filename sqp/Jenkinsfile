@@ -10,11 +10,11 @@ pipeline {
 
     environment {
         // TODO 1: Define las siguientes variables de entorno
-        // SONAR_PROJECT_KEY  = "tyranitor"                  // clave del proyecto en SonarQube
-        // SONAR_PROJECT_NAME = "tyranitor"                  // nombre visible en SonarQube
-        // SONAR_HOST_URL     = "http://localhost:9000"      // URL del contenedor SonarQube
-        // COVERAGE_THRESHOLD = "60"                         // umbral mínimo de cobertura (sugerido: 60)
-        // REPORTS_DIR        = "reports"                    // carpeta de reportes
+        SONAR_PROJECT_KEY  = "tyranitor"                  
+        SONAR_PROJECT_NAME = "tyranitor"                  
+        SONAR_HOST_URL     = "http://localhost:9000"    
+        COVERAGE_THRESHOLD = "60"                         
+        REPORTS_DIR        = "reports"                   
 
         APP_NAME = "software-quality-project"
     }
