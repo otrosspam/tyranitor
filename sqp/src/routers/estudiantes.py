@@ -10,6 +10,7 @@ DEUDA TÉCNICA:
 from fastapi import APIRouter, HTTPException
 from src.models.schemas import EstudianteCreate, EstudianteResponse
 from src.models.database import get_estudiantes
+MENSAJE_ESTUDIANTE_NO_ENCONTRADO = "Estudiante no encontrado"
 
 router = APIRouter(prefix="/estudiantes", tags=["Estudiantes"])
 
@@ -49,7 +50,7 @@ def obtener_estudiante(codigo: str):
     db = get_estudiantes()
     codigo = codigo.upper()
     if codigo not in db:
-        raise HTTPException(status_code=404, detail="Estudiante no encontrado")
+        raise HTTPException(status_code=404, detail=MENSAJE_ESTUDIANTE_NO_ENCONTRADO)
     return db[codigo]
 
 
@@ -58,7 +59,7 @@ def eliminar_estudiante(codigo: str):
     db = get_estudiantes()
     codigo = codigo.upper()
     if codigo not in db:
-        raise HTTPException(status_code=404, detail="Estudiante no encontrado")
+        raise HTTPException(status_code=404, detail=MENSAJE_ESTUDIANTE_NO_ENCONTRADO)
     del db[codigo]
 
 
@@ -67,6 +68,6 @@ def desactivar_estudiante(codigo: str):
     db = get_estudiantes()
     codigo = codigo.upper()
     if codigo not in db:
-        raise HTTPException(status_code=404, detail="Estudiante no encontrado")
+        raise HTTPException(status_code=404, detail=MENSAJE_ESTUDIANTE_NO_ENCONTRADO)
     db[codigo]["activo"] = False
     return db[codigo]
