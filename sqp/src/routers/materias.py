@@ -7,7 +7,8 @@ from src.models.schemas import MateriaCreate, MateriaResponse
 from src.models.database import get_materias
 
 router = APIRouter(prefix="/materias", tags=["Materias"])
-
+MENSAJE_ESTUDIANTE_NO_ENCONTRADO = "Estudiante no encontrado"
+MENSAJE_MATERIA_NO_ENCONTRADA = "Materia no encontrada"
 
 @router.post("/", response_model=MateriaResponse, status_code=201)
 def crear_materia(materia: MateriaCreate):
@@ -41,7 +42,7 @@ def obtener_materia(codigo: str):
     db = get_materias()
     codigo = codigo.upper()
     if codigo not in db:
-        raise HTTPException(status_code=404, detail="Materia no encontrada")
+        raise HTTPException(status_code=404, detail=MENSAJE_MATERIA_NO_ENCONTRADA)
     return db[codigo]
 
 
@@ -50,5 +51,5 @@ def eliminar_materia(codigo: str):
     db = get_materias()
     codigo = codigo.upper()
     if codigo not in db:
-        raise HTTPException(status_code=404, detail="Materia no encontrada")
+        raise HTTPException(status_code=404, detail=MENSAJE_MATERIA_NO_ENCONTRADA)
     del db[codigo]
