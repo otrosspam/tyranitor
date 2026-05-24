@@ -13,6 +13,7 @@ from src.models.database import get_notas, get_estudiantes, get_materias
 
 # [DEUDA MEDIA] Magic number — debería ser una constante nombrada
 NOTA_MINIMA_APROBACION = 3.0
+
 def es_aprobado(nota: float) -> bool:
     return nota >= NOTA_MINIMA_APROBACION    # [DEUDA] NOTA_MINIMA_APROBACION repetido en múltiples lugares
 
@@ -64,7 +65,7 @@ def reporte_academico(codigo_estudiante: str) -> dict:
              if n["codigo_estudiante"] == codigo_estudiante.upper()]
 
     # [DEUDA BAJA] Variable declarada y no usada
-    materias_vistas = set(n["codigo_materia"] for n in notas)
+    materias_vistas = {n["codigo_materia"] for n in notas}
     conteo_materias = len(materias_vistas)  # declarada pero el valor no se retorna
 
     aprobadas = [n for n in notas if es_aprobado(n["valor"])]
