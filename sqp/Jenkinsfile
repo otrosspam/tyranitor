@@ -95,7 +95,7 @@ pipeline {
                         -Dsonar.projectName=${SONAR_PROJECT_NAME} \
                         -Dsonar.sources=src \
                         -Dsonar.tests=tests \
-                        -Dsonar.python.coverage.reportPaths=sqp/${REPORTS_DIR}/coverage.xml \
+                        -Dsonar.python.coverage.reportPaths=reports/coverage.xml \
                         -Dsonar.python.version=3
                     """
                 }
@@ -113,7 +113,7 @@ pipeline {
         stage("6 · Resumen") {
             steps {
                 sh """
-                
+
                     echo "Proyecto : ${APP_NAME}"
                     echo "Branch   : \$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo N/A)"
                     echo "Commit   : \$(git rev-parse --short HEAD 2>/dev/null || echo N/A)"
