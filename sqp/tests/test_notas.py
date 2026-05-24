@@ -61,7 +61,7 @@ class TestRegistrarNota:
         response = client.post("/notas/", json=payload)
         assert response.status_code == 201
         data = response.json()
-        assert data["valor"] == 4.0
+        assert data["valor"] == pytest.approx(4.0)
         assert data["aprobado"] is True
 
     def test_registrar_nota_estudiante_inexistente(self, setup_datos):
@@ -110,7 +110,7 @@ class TestReporteAcademico:
         }
         resultado = reporte_academico("E001")
         assert resultado["total_notas"] == 0
-        assert resultado["promedio"] == 0.0
+        assert resultado["promedio"] == pytest.approx(0.0)
 
 
 class TestEstadisticasGlobales:
@@ -118,7 +118,7 @@ class TestEstadisticasGlobales:
     def test_estadisticas_sin_datos(self):
         stats = estadisticas_globales()
         assert stats["total_estudiantes"] == 0
-        assert stats["promedio_global"] == 0.0
+        assert stats["promedio_global"] == pytest.approx(0.0)
 
 
 # ─────────────────────────────────────────────────────────────

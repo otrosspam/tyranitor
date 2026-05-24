@@ -12,9 +12,9 @@ DEUDA TÉCNICA INTENCIONAL:
 from src.models.database import get_notas, get_estudiantes, get_materias
 
 # [DEUDA MEDIA] Magic number — debería ser una constante nombrada
-# NOTA_MINIMA_APROBACION = 3.0
+NOTA_MINIMA_APROBACION = 3.0
 def es_aprobado(nota: float) -> bool:
-    return nota >= 3.0    # [DEUDA] 3.0 repetido en múltiples lugares
+    return nota >= NOTA_MINIMA_APROBACION    # [DEUDA] NOTA_MINIMA_APROBACION repetido en múltiples lugares
 
 
 def calcular_promedio_estudiante(codigo: str) -> float:
