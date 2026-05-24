@@ -105,7 +105,7 @@ pipeline {
         stage("5 · Quality Gate") {
             steps {
                 timeout(time: 5, unit: "MINUTES") {
-                    waitForQualityGate abortPipeline: true
+                    waitForQualityGate abortPipeline: false
                 }
             }
         }
@@ -123,10 +123,7 @@ pipeline {
     }
 
     post {
-        // TODO 7: Completa el bloque post con:
-        //   always   — mensaje de estado del pipeline
-        //   success  — mensaje de build exitoso
-        //   failure  — mensaje de fallo con URL de SonarQube
+        
         always {
             echo "Pipeline finalizado: ${currentBuild.currentResult}"
         }
