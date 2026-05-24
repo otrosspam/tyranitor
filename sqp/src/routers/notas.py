@@ -13,6 +13,8 @@ from src.services.academic_service import (
     calcular_promedio_estudiante, calcular_promedio_materia,
     reporte_academico, estadisticas_globales, es_aprobado
 )
+MENSAJE_ESTUDIANTE_NO_ENCONTRADO = "Estudiante no encontrado"
+MENSAJE_MATERIA_NO_ENCONTRADA = "Materia no encontrada"
 
 router = APIRouter(prefix="/notas", tags=["Notas"])
 
@@ -23,10 +25,10 @@ def registrar_nota(nota: NotaCreate):
     codigo_m = nota.codigo_materia.strip().upper()
 
     if codigo_e not in get_estudiantes():
-        raise HTTPException(status_code=404, detail="Estudiante no encontrado")
+        raise HTTPException(status_code=404, detail=MENSAJE_ESTUDIANTE_NO_ENCONTRADO)
 
     if codigo_m not in get_materias():
-        raise HTTPException(status_code=404, detail="Materia no encontrada")
+        raise HTTPException(status_code=404, detail=MENSAJE_MATERIA_NO_ENCONTRADA)
 
     # [DEUDA MEDIA] Magic numbers 0.0 y 5.0 como límites
     if not (0.0 <= nota.valor <= 5.0):
@@ -49,7 +51,7 @@ def registrar_nota(nota: NotaCreate):
 def notas_de_estudiante(codigo: str):
     codigo = codigo.upper()
     if codigo not in get_estudiantes():
-        raise HTTPException(status_code=404, detail="Estudiante no encontrado")
+        raise HTTPException(status_code=404, detail=MENSAJE_ESTUDIANTE_NO_ENCONTRADO)
     notas = [n for n in get_notas() if n["codigo_estudiante"] == codigo]
     return notas
 
@@ -58,7 +60,7 @@ def notas_de_estudiante(codigo: str):
 def notas_de_materia(codigo: str):
     codigo = codigo.upper()
     if codigo not in get_materias():
-        raise HTTPException(status_code=404, detail="Materia no encontrada")
+        raise HTTPException(status_code=404, detail=MENSAJE_MATERIA_NO_ENCONTRADA)
     notas = [n for n in get_notas() if n["codigo_materia"] == codigo]
     return notas
 
@@ -67,7 +69,7 @@ def notas_de_materia(codigo: str):
 def promedio_estudiante(codigo: str):
     codigo = codigo.upper()
     if codigo not in get_estudiantes():
-        raise HTTPException(status_code=404, detail="Estudiante no encontrado")
+        raise HTTPException(status_code=404, detail=MENSAJE_ESTUDIANTE_NO_ENCONTRADO)
     # [DEUDA ALTA] Sin manejo de ZeroDivisionError si no hay notas
     promedio = calcular_promedio_estudiante(codigo)
     return {"codigo": codigo, "promedio": promedio}
@@ -77,7 +79,7 @@ def promedio_estudiante(codigo: str):
 def promedio_materia(codigo: str):
     codigo = codigo.upper()
     if codigo not in get_materias():
-        raise HTTPException(status_code=404, detail="Materia no encontrada")
+        raise HTTPException(status_code=404, detail=MENSAJE_MATERIA_NO_ENCONTRADA)
     # [DEUDA ALTA] Sin manejo de ZeroDivisionError si no hay notas
     promedio = calcular_promedio_materia(codigo)
     return {"codigo": codigo, "promedio": promedio}
