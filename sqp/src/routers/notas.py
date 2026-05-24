@@ -77,6 +77,7 @@ def promedio_estudiante(codigo: str):
 
 @router.get("/promedio/materia/{codigo}")
 def promedio_materia(codigo: str):
+    
     codigo = codigo.upper()
     if codigo not in get_materias():
         raise HTTPException(status_code=404, detail=MENSAJE_MATERIA_NO_ENCONTRADA)

@@ -122,9 +122,8 @@ class TestEstadisticasGlobales:
 
 
 # ─────────────────────────────────────────────────────────────
-#  Tests adicionales para mejorar la cobertura y validar casos
-#  no cubiertos por el equipo.
-# ─────────────────────────────────────────────────────────────
+
+
 
 
 class TestCasosAvanzados:
